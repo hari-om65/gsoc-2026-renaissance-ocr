@@ -1,8 +1,6 @@
 # renAIssance OCR Pipeline - GSoC 2026
 
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Google_Summer_of_Code_logo.svg/512px-Google_Summer_of_Code_logo.svg.png" alt="GSoC Logo" style="height: 60px;" />
-</p>
+# 🏛️ HumanAI Foundation | Google Summer of Code 2026
 
 This repository contains a robust, dual-stage machine learning pipeline designed to extract and transcribe 17th-century Spanish text (e.g., the 1611 dictionary). It addresses the severe challenges of early modern typography, complex multi-column layouts, and page embellishments. 
 
