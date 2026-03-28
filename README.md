@@ -23,40 +23,50 @@ Traditional OCR tools fail on aged 17th-century manuscripts due to faded ink, in
 | **Phase 5** — Synthetic Noise Generator | Realistic OCR error injection using a confusion matrix built from real data (66x augmentation) |
 | **Phase 6** — Kaggle Error Corpus | Publishable dataset of 2,140 OCR error pairs |
 | **Phase 7** — Integration & Local Deployment | All 15 scripts documented and runnable locally |
-```
-Page Image (PDF/PNG)
-        │
-        ▼
-┌──────────────────────────────┐
-│  Phase 1: Mask R-CNN          │
-│  Line Segmentation            │
-│  (Detectron2, ResNet-50-FPN)  │
-│  → 768 lines from 44 pages   │
-└──────────┬───────────────────┘
-           ▼
-┌──────────────────────────────┐
-│  Phase 2: TrOCR               │
-│  OCR Recognition              │
-│  (Fine-tuned ViT + RoBERTa)  │
-│  → CER: 31.9%                │
-└──────────┬───────────────────┘
-           ▼
-┌──────────────────────────────────────────┐
-│  Phase 3: Correction Cascade              │
-│  ┌──────────┐ ┌────────┐ ┌────────────┐ │
-│  │ Hunspell │→│T5+LoRA │→│ Llama 3.1  │ │
-│  │ +2284    │ │(neural)│ │ (fallback) │ │
-│  │ words    │ │        │ │ via Groq   │ │
-│  └──────────┘ └────────┘ └────────────┘ │
-│  → 2.8% CER improvement                  │
-└──────────┬───────────────────────────────┘
-           ▼
-┌──────────────────────────────┐
-│  Phase 4: HITL Review         │
-│  → 94% human time saved      │
-└──────────┬───────────────────┘
-           ▼
-     Final Transcription
+```mermaid
+flowchart TD
+    A[🖼️ Page Image - PDF/PNG] --> B
+
+    B["📦 Phase 1: Line Segmentation
+    Mask R-CNN · ResNet-50-FPN · Detectron2
+    → 768 lines from 44 pages"]
+
+    B --> C["🔍 Phase 2: OCR Recognition
+    TrOCR · Fine-tuned ViT + RoBERTa
+    → CER: 31.9%"]
+
+    C --> D1
+    C --> D2
+    C --> D3
+
+    subgraph CASCADE ["⚙️ Phase 3: Correction Cascade"]
+        D1["📖 Stage 1
+        Hunspell
+        2,284 words"]
+        D2["�� Stage 2
+        T5 + LoRA
+        neural"]
+        D3["🤖 Stage 3
+        Llama 3.1
+        via Groq"]
+        D1 --> D2 --> D3
+    end
+
+    D3 --> E["👁️ Phase 4: HITL Review
+    → 94% human time saved
+    → Only 9/141 lines need review"]
+
+    E --> F["✅ Final Transcription"]
+
+    style A fill:#4A90D9,color:#fff,stroke:#2c5f8a
+    style B fill:#7B68EE,color:#fff,stroke:#5a4db0
+    style C fill:#7B68EE,color:#fff,stroke:#5a4db0
+    style CASCADE fill:#1a1a2e,stroke:#7B68EE,color:#fff
+    style D1 fill:#20B2AA,color:#fff,stroke:#178a83
+    style D2 fill:#20B2AA,color:#fff,stroke:#178a83
+    style D3 fill:#20B2AA,color:#fff,stroke:#178a83
+    style E fill:#FF8C42,color:#fff,stroke:#cc6e2f
+    style F fill:#2ECC71,color:#fff,stroke:#27ae60
 ```
 
 ---
