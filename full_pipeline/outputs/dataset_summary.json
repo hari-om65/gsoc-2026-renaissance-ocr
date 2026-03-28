@@ -1,0 +1,19 @@
+{
+  "dataset_name": "17th Century Spanish OCR Error Corpus",
+  "real_ocr_pairs": 140,
+  "synthetic_pairs": 9060,
+  "total_pairs": 2140,
+  "overall_error_rate": 0.18969597669761515,
+  "top_confusions": [
+    "s->f",
+    "s->l",
+    "u->a",
+    "e->c",
+    "s->í",
+    "a->á",
+    "e->é",
+    "t->r",
+    "o->ó",
+    " ->."
+  ]
+}
